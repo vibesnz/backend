@@ -18,11 +18,11 @@ export async function postTemplateHandler(req: Request, res: Response) {
       template.push(solution);
     }
     else {
-      template.push('<div><font color="red">Empty response from Github Copilot</font></div>')
+      template.push('<div><font color="red">Oops! Our AI couldn\'t vibe with your prompt</font></div>')
     }  
   } catch (error) {
     console.log('Github Copilot error', error);
-    template.push(`<div><font color="red">Github Copilot error: ${error.message}</font></div>`)
+    template.push(`<div><font color="red">Oh no! The vibes have broken somehow: ${error.message}</font></div>`)
   }
   return getTemplateHandler(req, res)
 }
