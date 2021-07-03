@@ -69,8 +69,6 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
 
 async function getSolution(prompt: string, functionName: string): Promise<string | undefined> {
   let data = await post(prompt, functionName);
-  console.log('Post data :',data)
-
   data = data.replace(/\[DONE\]/gi, '');
 
   const dataSections = data.split("data:");
