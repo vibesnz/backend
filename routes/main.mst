@@ -87,11 +87,11 @@ function repeat(str) {
 function startLoading() {
   document.getElementById('loading').style.display = 'flex'
   var loadingCopies = [
-    ...repeat("Loading"),
     ...repeat("Training model"),
-    ...repeat("Counting sheep"),
     ...repeat("Adjusting the parameters"),
     ...repeat("Generating HTML"),
+    ...repeat("Loading"),
+    ...repeat("Counting sheep"),
     ...repeat("Parsing HTML"),
     ...repeat("Getting HTML to run"),
     ...repeat("Consulting StackOverflow"),
@@ -114,7 +114,7 @@ function startLoading() {
 <div id="loading">
   <div class="loading-box">
     <img src="https://media.tenor.com/images/cfd8a29db597b48db80d65959fcbd249/tenor.gif" width="200">
-    <h3 id="loading-text">Loading...</h3>
+    <h3 id="loading-text">Training model</h3>
   </div>
 </div>
 <div class="prompt-box">
