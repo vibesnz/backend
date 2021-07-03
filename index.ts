@@ -5,6 +5,9 @@ import { route } from './routes';
 const port = 3000;
 
 export const shitHTML = `
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react@17/umd/react.production.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.js" crossorigin></script>
 <div style='display: block !important; position: fixed !important; top: 1rem !important; right: 1rem !important; border-radius: 8px !important; background-color: white !important; z-index: 90000000 !important; padding: 1rem !important;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08) !important; '>
