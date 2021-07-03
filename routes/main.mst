@@ -26,7 +26,7 @@
   padding: 30 40;
   border-radius: 10px;
 }
-.loading-text {
+#loading-text {
   margin-top: 20;
   margin-bottom: 0;
 }
@@ -75,11 +75,46 @@
   border-radius: 4px
 }
 </style>
+<script>
+function repeat(str) {
+  return [
+    str + "",
+    str + ".",
+    str + "..",
+    str + "...",
+  ]
+}
+function startLoading() {
+  document.getElementById('loading').style.display = 'flex'
+  var loadingCopies = [
+    ...repeat("Loading"),
+    ...repeat("Training model"),
+    ...repeat("Counting sheep"),
+    ...repeat("Adjusting the parameters"),
+    ...repeat("Generating HTML"),
+    ...repeat("Parsing HTML"),
+    ...repeat("Getting HTML to run"),
+    ...repeat("Consulting StackOverflow"),
+    ...repeat("Debugging"),
+    ...repeat("Hiring a consultant"),
+    ...repeat("Giving a TED talk"),
+    ...repeat("Making dinner"),
+    ...repeat("Getting groceries"),
+    ...repeat("Driving to the supermarket"),
+  ]
+  var counter = 0
+  setInterval(function() {
+    var copy = loadingCopies[counter % loadingCopies.length]
+    document.getElementById('loading-text').innerHTML = copy
+    counter++
+  }, 300)
+}
+</script>
 <img src="https://media.tenor.com/images/cfd8a29db597b48db80d65959fcbd249/tenor.gif" class="hidden-img"><!--preload-->
 <div id="loading">
   <div class="loading-box">
     <img src="https://media.tenor.com/images/cfd8a29db597b48db80d65959fcbd249/tenor.gif" width="200">
-    <h3 class="loading-text">Loading...</h3>
+    <h3 id="loading-text">Loading...</h3>
   </div>
 </div>
 <div class="prompt-box">
@@ -89,7 +124,7 @@
     <li>step 2: Type in the product you want in the field below</li>
     <li>step 3: Hit submit and let our AI build your product</li>
   </ul>
-  <form method="POST" action="/template" class="prompt-form" onsubmit="document.getElementById('loading').style.display = 'flex'">
+  <form method="POST" action="/template" class="prompt-form" onsubmit="startLoading()">
     <input name="functionName" placeholder="2 words description" class="prompt-input"/>
     <br>
     <textarea class="prompt-textarea" name="content" placeholder="describe your 1M dollar idea here"  rows="5" cols="50" required></textarea>
