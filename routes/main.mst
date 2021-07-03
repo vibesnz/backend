@@ -98,12 +98,22 @@
   font-family: "comic sans ms" !important;
   border-radius: 4px;
 }
+.prompt-add-button {
+  font-family: "comic sans ms" !important;
+  margin-top: 10px;
+  padding: 4px 20px;
+  border-width: 1px;
+  border-radius: 4px
+}
 .prompt-button {
   font-family: "comic sans ms" !important;
   margin-top: 10px;
   padding: 4px 20px;
   border-width: 1px;
   border-radius: 4px
+}
+#prompt-template {
+  display: none;
 }
 </style>
 <script>
@@ -156,12 +166,25 @@ function startLoading() {
     <li>step 2: Type in the product you want in the field below</li>
     <li>step 3: Hit submit and let our AI build your product</li>
   </ul>
+  <div id="prompt-template">
+    <input name="functionName[]" placeholder="2 words description" class="prompt-input"/>
+    <br>
+    <textarea class="prompt-textarea" name="content[]" placeholder="describe your 1M dollar idea here"  rows="5" cols="50" required></textarea>
+    <br>
+  </div>
   <form method="POST" action="/template" class="prompt-form" onsubmit="startLoading()">
-    <input name="functionName" placeholder="2 words description" class="prompt-input"/>
-    <br>
-    <textarea class="prompt-textarea" name="content" placeholder="describe your 1M dollar idea here"  rows="5" cols="50" required></textarea>
-    <br>
+    <div id="prompts">
+    </div>
+    <button type="button" class="prompt-add-button" onclick="addPrompt()">+</button>
     <button type="submit" class="prompt-button">submit</button>
   </form>
+  <script>
+  function addPrompt() {
+    var template = document.getElementById('prompt-template')  
+    var html = template.innerHTML
+    document.getElementById('prompts').insertAdjacentHTML('beforeend', html)
+  }
+  addPrompt()
+  </script>
 </div>
 {{{rest}}}
