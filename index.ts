@@ -5,6 +5,7 @@ import { route } from './routes';
 const port = 3000;
 
 export const shitHTML = `
+<script src="https://unpkg.com/react@17/umd/react.production.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.js" crossorigin></script>
 <div style='display: block !important; position: fixed !important; top: 1rem !important; right: 1rem !important; border-radius: 8px !important; background-color: white !important; z-index: 90000000 !important; padding: 1rem !important;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08) !important; '>
 <h1 style='font-size: 1.5rem !important; font-family: "comic sans ms" !important; color: black !important; margin-bottom: 1rem !important;'>Vibe AI </h1>
