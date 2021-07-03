@@ -5,12 +5,10 @@ import fs from 'fs'
 import Mustache from 'mustache';
 
 export const mainTemplate = fs.readFileSync('./routes/main.mst').toString()
-// export const shitHTML = Mustache.render(mainTemplate, {});
-
 
 const port = 3000;
-
 const server = Express();
+
 server.use(cors());
 server.use(Express.json());
 server.use(Express.urlencoded({ extended: true }));
