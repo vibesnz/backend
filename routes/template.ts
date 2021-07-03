@@ -58,6 +58,10 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
       "Accept": "application/json"
     }
   });
+  if (res.status !== 200) {
+    throw new Error(`Bad status: ${res.status} ${res.statusText}`);
+  }
+
   const text = await res.text();
   return text;
 }
@@ -65,6 +69,8 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
 
 async function getSolution(prompt: string, functionName: string): Promise<string | undefined> {
   let data = await post(prompt, functionName);
+  console.log('Post data :',data)
+
   data = data.replace(/\[DONE\]/gi, '');
 
   const dataSections = data.split("data:");
