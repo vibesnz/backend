@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { camelCase, upperFirst } from 'lodash'
+import { camelCase, upperFirst, reverse } from 'lodash'
 import Mustache from 'mustache';
 import fetch from "node-fetch";
 import { mainTemplate } from '..';
@@ -7,7 +7,7 @@ import { mainTemplate } from '..';
 const template: string[] = [];
 
 export function getTemplateHandler(req: Request, res: Response) {
-  const rest = template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
+  const rest = reverse(template).reduce((acc, snipet) => `${acc} ${snipet}`, '')
   return res.send(Mustache.render(mainTemplate, { rest }))
 }
 
