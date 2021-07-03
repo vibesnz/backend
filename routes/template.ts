@@ -11,8 +11,18 @@ export function getTemplateHandler(req: Request, res: Response) {
 }
 
 export async function postTemplateHandler(req: Request, res: Response) {
-  // TODO: shit
-  template.push(await shittyScript(req.body.content, req.body.functionName));
+  try {
+    const solution = await shittyScript(req.body.content, req.body.functionName)
+    if (solution) {
+      template.push(solution);
+    }
+    else {
+      template.push('<div><font color="red">Empty response from Github Copilot</font></div>')
+    }  
+  } catch (error) {
+    console.log('Github Copilot error', error);
+    template.push(`<div><font color="red">Github Copilot error: ${error.message}</font></div>`)
+  }
   const rest = template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
   return res.send(Mustache.render(mainTemplate, { rest }))
 }
@@ -55,33 +65,28 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
 }
 
 
-async function shittyScript(prompt: string, functionName: string) {
+async function shittyScript(prompt: string, functionName: string): Promise<string | undefined> {
   let data = await post(prompt, functionName);
 
   data = data.replace(/\[DONE\]/gi, '');
 
   const x = data.split("data:");
 
-  let res = {
-  };
+  let res: Record<string, string> = {};
 
   for (const v of x) {
     const value = v.trim();
-    // console.log('value',value)
 
     if (!value) {
       continue;
     }
     const data = JSON.parse(value);
-    // console.log('data', data)
 
     if (!data.choices) {
       console.log("CHOICES: ", data);
       continue;
     }
     const choice = data.choices[0];
-    // console.log(`[${choice.index}] - ${choice.text}`);
-    // res += choice.text;
 
     if (!res[choice.index]) {
       res[choice.index] = "";
