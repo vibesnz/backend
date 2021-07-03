@@ -51,7 +51,7 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
-      "Authorization": "Bearer 205e6622fef1ec521b7f7b175ea8dbe2:1625323825:5dcf6a9f8059dbf9a05875c71e38dee52ea537746bf76b669c0420843a8b3dd1",
+      "Authorization": "Bearer 205e6622fef1ec521b7f7b175ea8dbe2:1625375988:af1b3ae8d7e3853ec0cb880e0656a060d4c5522c7b60aca4d8611dd3514c5123",
       "Openai-Organization": "github-copilot",
       "OpenAI-Intent": "copilot-ghost",
       "Content-Type": "application/json",
