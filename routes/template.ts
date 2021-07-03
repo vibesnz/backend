@@ -7,7 +7,8 @@ import { mainTemplate } from '..';
 const template: string[] = [];
 
 export function getTemplateHandler(req: Request, res: Response) {
-  return res.json({ template }).end();
+  const rest = template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
+  return res.send(Mustache.render(mainTemplate, { rest }))
 }
 
 export async function postTemplateHandler(req: Request, res: Response) {
@@ -23,8 +24,7 @@ export async function postTemplateHandler(req: Request, res: Response) {
     console.log('Github Copilot error', error);
     template.push(`<div><font color="red">Github Copilot error: ${error.message}</font></div>`)
   }
-  const rest = template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
-  return res.send(Mustache.render(mainTemplate, { rest }))
+  return getTemplateHandler(req, res)
 }
 
 // this function will do a post request using fetch API

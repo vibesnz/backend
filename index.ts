@@ -3,6 +3,7 @@ import cors from 'cors';
 import { route } from './routes';
 import fs from 'fs'
 import Mustache from 'mustache';
+import { getTemplateHandler } from './routes/template';
 
 export const mainTemplate = fs.readFileSync('./routes/main.mst').toString()
 
@@ -14,8 +15,6 @@ server.use(Express.json());
 server.use(Express.urlencoded({ extended: true }));
 server.use(Express.static('public'))
 server.use('/template', route);
-server.get('/', (_, res) => {
-  res.send(Mustache.render(mainTemplate, {}))
-})
+server.get('/', getTemplateHandler)
 
 server.listen(port, () => { console.log("Good vibes only"); });
