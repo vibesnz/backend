@@ -5,7 +5,7 @@ import { route } from './routes';
 const port = 3000;
 
 export const shitHTML = `
-<div style='display: block !important; position: fixed !important; top: 1rem !important; left: 1rem !important; border-radius: 8px !important background-color: white !important; z-index: 90000000 !important; padding: 1rem !important; '>
+<div style='display: block !important; position: fixed !important; top: 1rem !important; left: 1rem !important; border-radius: 8px !important background-color: white !important; z-index: 90000000 !important; padding: 1rem !important;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08) !important; '>
 <h1 style='font-size: 1.5rem !important; font-family: sans-serif !important; color: black !important; margin-bottom: 1rem !important;'>Vibe AI </h1>
 <ul style='font-size: 1rem !important; font-family: sans-serif !important; color: black !important;'>
 <li>step 1: Fire your engineering, design and product teams</li>
