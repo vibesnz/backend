@@ -9,6 +9,6 @@ const server = Express();
 server.use(cors());
 server.use(json());
 
-server.use('/', route);
+server.use('/api', route);
 
 server.listen(port, () => { console.log("Good vibes only"); });
