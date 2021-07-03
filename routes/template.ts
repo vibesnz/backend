@@ -11,66 +11,17 @@ export function getTemplateHandler(req: Request, res: Response) {
 
 export async function postTemplateHandler(req: Request, res: Response) {
   // TODO: shit
-  template.push(await shittyScript(req.body.content));
+  template.push(await shittyScript(req.body.content, req.body.functionName));
   return res.send(`${shitHTML}${template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')}`);
 }
 
 // this function will do a post request using fetch API
-async function post(prompt: string): Promise<string> {
+async function post(prompt: string, functionNameInput:string): Promise<string> {
 
-  const functionName = `${upperFirst(camelCase(prompt.split(" ").slice(0,2).join(" ")))}Component(){`
-
-  const exampleComponent = `
-  // This is a Bootstrap based component
-  // A marketing home page
-  function HomePageComponent() {
-    return (
-      <div class="container">
-      <div class="masthead">
-        <h3 class="text-muted">Project name</h3>
-        <nav>
-          <ul class="nav nav-justified">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Downloads</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="jumbotron">
-        <h1>Marketing stuff!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
-      </div>
-      <div class="row">
-        <div class="col-lg-4">
-          <h2>Safari bug warning!</h2>
-          <p class="text-danger">As of v9.1.2, Safari exhibits a bug in which resizing your browser horizontally causes rendering errors in the justified nav that are cleared upon refreshing.</p>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-      <footer class="footer">
-        <p>&copy; 2016 Company, Inc.</p>
-      </footer>
-    </div>
-    )
-  }`
+  const functionName = `${upperFirst(camelCase(functionNameInput.split(" ").slice(0,2).join(" ")))}Component(){`
 
   const data = {
-    "prompt": `/ Language: javascript\n// Path: Component.js\nimport React from 'react'\n\n ${exampleComponent} \n// This is a Bootstrap based component which does \n// ${prompt}\nfunction ${functionName}
+    "prompt": `/ Language: javascript\n// Path: Component.js\nimport React from 'react'\n\n// Bootstrap Marketing component \n// ${prompt}\nfunction ${functionName}
       return (`,
     "max_tokens": 500,
     "temperature": 0.3,
@@ -82,7 +33,7 @@ async function post(prompt: string): Promise<string> {
   };
 
   console.log("Prompt: ", prompt);
-  console.log("Fn Name: ", functionName);
+  console.log("Fn Name: ", functionNameInput);
 
 
   const res = await fetch("https://copilot.githubassets.com/v1/engines/github-multi-stochbpe-cushman-pii/completions", {
@@ -103,8 +54,8 @@ async function post(prompt: string): Promise<string> {
 }
 
 
-async function shittyScript(prompt: string) {
-  let data = await post(prompt);
+async function shittyScript(prompt: string, functionName: string) {
+  let data = await post(prompt, functionName);
 
   data = data.replace(/\[DONE\]/gi, '');
 
@@ -149,10 +100,10 @@ async function shittyScript(prompt: string) {
     }
   }
 
-  matches.sort((a, b) => b.length - a.length);
+  matches.sort((a, b) => a.length - b.length);
 
   if (matches.length) {
     console.log("Result :", matches[0]);
-    return matches[0];
+    return matches[0].replace(/className/g, "class");
   }
 }
