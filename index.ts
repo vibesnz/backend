@@ -1,31 +1,14 @@
 import Express from 'express';
 import cors from 'cors';
 import { route } from './routes';
+import fs from 'fs'
+import Mustache from 'mustache';
+
+export const mainTemplate = fs.readFileSync('./routes/main.mst').toString()
+// export const shitHTML = Mustache.render(mainTemplate, {});
+
 
 const port = 3000;
-
-export const shitHTML = `
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://unpkg.com/react@17/umd/react.production.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.js" crossorigin></script>
-<div style='display: block !important; position: fixed !important; bottom: 1rem !important; right: 1rem !important; border-radius: 8px !important; background-color: white !important; z-index: 90000000 !important; padding: 1rem !important;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08) !important; '>
-<h1 style='font-size: 1.5rem !important; font-family: "comic sans ms" !important; color: black !important; margin-bottom: 1rem !important;'>Vibe AI </h1>
-<ul style='font-size: 1rem !important; font-family: "comic sans ms" !important; color: black !important;'>
-<li>step 1: Fire your engineering, design and product teams</li>
-<li>step 2: Type in the product you want in the field below</li>
-<li>step 3: Hit submit and let our AI build your product</li>
-</ul>
-<form method="POST" action="/template" style='margin-top: 1rem !important!'>
-<input name="functionName" placeholder="2 words description"></input>
-<br>
-  <textarea style='font-family: "comic sans ms" !important' name="content" placeholder="Describe your 1M dollar idea here"  rows="5" cols="50" required></textarea>
-  <br>
-  <br>
-  <button type="submit" style='font-family: "comic sans ms" !important'>submit</button>
-</form>
-</div>
-`
 
 const server = Express();
 server.use(cors());
@@ -34,7 +17,7 @@ server.use(Express.urlencoded({ extended: true }));
 server.use(Express.static('public'))
 server.use('/template', route);
 server.get('/', (_, res) => {
-  res.send(shitHTML)
+  res.send(Mustache.render(mainTemplate, {}))
 })
 
 server.listen(port, () => { console.log("Good vibes only"); });

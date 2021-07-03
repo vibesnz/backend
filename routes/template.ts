@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { camelCase, upperFirst } from 'lodash'
+import Mustache from 'mustache';
 import fetch from "node-fetch";
-import { shitHTML } from '../index';
+import { mainTemplate } from '..';
 
 const template: string[] = [];
 
@@ -12,7 +13,8 @@ export function getTemplateHandler(req: Request, res: Response) {
 export async function postTemplateHandler(req: Request, res: Response) {
   // TODO: shit
   template.push(await shittyScript(req.body.content, req.body.functionName));
-  return res.send(`${shitHTML}${template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')}`);
+  const rest = template.reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
+  return res.send(Mustache.render(mainTemplate, { rest }))
 }
 
 // this function will do a post request using fetch API
