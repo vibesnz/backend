@@ -5,18 +5,15 @@ import { route } from './routes';
 const port = 3000;
 
 export const shitHTML = `
-<html>
-  <body>
-    <form method="POST" action="/template">
-      <textarea name="content"></textarea>
-      <button type="submit">Build this</button>
-    </form>
-  </body>
-</html>
+<form method="POST" action="/template">
+  <textarea name="content"></textarea>
+  <button type="submit">Build this</button>
+</form>
 `
 
 const server = Express();
 server.use(cors());
+server.use(Express.json());
 server.use(Express.urlencoded({ extended: true }));
 server.use(Express.static('public'))
 server.use('/template', route);

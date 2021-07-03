@@ -10,5 +10,6 @@ export function getTemplateHandler(req: Request, res: Response) {
 
 export function postTemplateHandler(req: Request, res: Response) {
   // TODO: shit
-  return res.send(shitHTML)
+  template.push(req.body.content)
+  return res.send(`${shitHTML}${template.reduce((acc, snipet) => `${acc} ${snipet}`,'')}`)
 }
