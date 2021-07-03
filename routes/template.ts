@@ -12,14 +12,27 @@ export function getTemplateHandler(req: Request, res: Response) {
 }
 
 export async function postTemplateHandler(req: Request, res: Response) {
+  const contents = req.body.content
+  const functionNames = req.body.functionName
+  const prompts = []
+  for (let i = 0; i < contents.length; i++) {
+    const content = contents[i];
+    const functionName = functionNames[i];
+    prompts.push({ content, functionName })
+  }
+
+  const solutionPromises = prompts.map(prompt => getSolution(prompt.content, prompt.functionName))
   try {
-    const solution = await getSolution(req.body.content, req.body.functionName)
-    if (solution) {
-      template.push(solution);
+    const solutions = await Promise.all(solutionPromises)
+    for (let i = solutions.length - 1; i >= 0; i--) {
+      const solution = solutions[i];
+      if (solution) {
+        template.push(solution);
+      }
+      else {
+        template.push('<div><font color="red">Oops! Our AI couldn\'t vibe with your prompt</font></div>')
+      }  
     }
-    else {
-      template.push('<div><font color="red">Oops! Our AI couldn\'t vibe with your prompt</font></div>')
-    }  
   } catch (error) {
     console.log('Github Copilot error', error);
     template.push(`<div><font color="red">Oh no! The vibes have broken somehow: ${error.message}</font></div>`)
