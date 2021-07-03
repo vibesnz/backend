@@ -12,7 +12,7 @@ export function getTemplateHandler(req: Request, res: Response) {
 
 export async function postTemplateHandler(req: Request, res: Response) {
   try {
-    const solution = await shittyScript(req.body.content, req.body.functionName)
+    const solution = await getSolution(req.body.content, req.body.functionName)
     if (solution) {
       template.push(solution);
     }
@@ -47,7 +47,6 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
   console.log("Prompt: ", prompt);
   console.log("Fn Name: ", functionNameInput);
 
-
   const res = await fetch("https://copilot.githubassets.com/v1/engines/github-multi-stochbpe-cushman-pii/completions", {
     method: "POST",
     body: JSON.stringify(data),
@@ -57,7 +56,6 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
       "OpenAI-Intent": "copilot-ghost",
       "Content-Type": "application/json",
       "Accept": "application/json"
-
     }
   });
   const text = await res.text();
@@ -65,17 +63,15 @@ async function post(prompt: string, functionNameInput:string): Promise<string> {
 }
 
 
-async function shittyScript(prompt: string, functionName: string): Promise<string | undefined> {
+async function getSolution(prompt: string, functionName: string): Promise<string | undefined> {
   let data = await post(prompt, functionName);
-
   data = data.replace(/\[DONE\]/gi, '');
 
-  const x = data.split("data:");
-
+  const dataSections = data.split("data:");
   let res: Record<string, string> = {};
 
-  for (const v of x) {
-    const value = v.trim();
+  for (const valueUntrimmed of dataSections) {
+    const value = valueUntrimmed.trim();
 
     if (!value) {
       continue;
@@ -83,7 +79,7 @@ async function shittyScript(prompt: string, functionName: string): Promise<strin
     const data = JSON.parse(value);
 
     if (!data.choices) {
-      console.log("CHOICES: ", data);
+      console.log("DATA WITH NO CHOICES: ", data);
       continue;
     }
     const choice = data.choices[0];
@@ -96,7 +92,6 @@ async function shittyScript(prompt: string, functionName: string): Promise<strin
   }
 
   const regexp = /<.*>.*<\/.*>/gms;
-
   const matches = [];
 
   for (const [key, value] of Object.entries(res)) {
@@ -109,7 +104,8 @@ async function shittyScript(prompt: string, functionName: string): Promise<strin
   matches.sort((a, b) => a.length - b.length);
 
   if (matches.length) {
-    console.log("Result :", matches[0]);
-    return matches[0].replace(/className/g, "class");
+    const result = matches[0].replace(/className/g, "class");
+    console.log("Result :", result);
+    return result
   }
 }
