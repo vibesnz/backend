@@ -1,0 +1,12 @@
+version: '3'
+services:
+  database:
+    image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
+
+    volumes:
+      - vibes:/var/lib/postgresql/data/ # persist data even if container shuts down
+volumes:
+  vibes: # named volumes can be managed easier using docker-compose
