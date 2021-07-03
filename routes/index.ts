@@ -8,8 +8,8 @@ route.get('/heatlhCheck', (_, res) => {
   res.json({ success: true }).end();
 });
 
-route.get('/template', getTemplateHandler);
-route.post('/template', postTemplateHandler);
+route.get('/', getTemplateHandler);
+route.post('/', postTemplateHandler);
 
 export {
   route

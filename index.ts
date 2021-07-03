@@ -1,15 +1,15 @@
 import Express from 'express';
-import { json } from 'body-parser';
 import cors from 'cors';
 import { route } from './routes';
 
 const port = 3000;
 
-const shitHTML = `
+export const shitHTML = `
 <html>
   <body>
     <form method="POST" action="/template">
-      <input name="content"/>
+      <textarea name="content"></textarea>
+      <button type="submit">Build this</button>
     </form>
   </body>
 </html>
@@ -17,9 +17,9 @@ const shitHTML = `
 
 const server = Express();
 server.use(cors());
-server.use(json());
+server.use(Express.urlencoded({ extended: true }));
 server.use(Express.static('public'))
-server.use('/api', route);
+server.use('/template', route);
 server.get('/', (_, res) => {
   res.send(shitHTML)
 })

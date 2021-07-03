@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 
+import { shitHTML } from '../index'
+
 const template: string[] = []
 
 export function getTemplateHandler(req: Request, res: Response) {
@@ -8,6 +10,5 @@ export function getTemplateHandler(req: Request, res: Response) {
 
 export function postTemplateHandler(req: Request, res: Response) {
   // TODO: shit
-
-  return res.json({ success: true }).end()
+  return res.send(shitHTML)
 }
