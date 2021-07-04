@@ -15,6 +15,6 @@ server.use(Express.json());
 server.use(Express.urlencoded({ extended: true }));
 server.use(Express.static('public'))
 server.use('/template', route);
-server.get('/', getTemplateHandler)
+server.get('/*', getTemplateHandler)
 
 server.listen(port, () => { console.log("Good vibes only"); });
