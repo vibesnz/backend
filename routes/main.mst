@@ -157,9 +157,9 @@ function startLoading() {
     <li>step 3: Hit submit and let our AI build your product</li>
   </ul>
   <form method="POST" action="/template" class="prompt-form" onsubmit="startLoading()">
-    <input name="functionName" placeholder="2 words description" class="prompt-input"/>
+    <input name="functionName" placeholder="what website element you want eg Table, Header, Button, Navigation" class="prompt-input"/>
     <br>
-    <textarea class="prompt-textarea" name="content" placeholder="describe your 1M dollar idea here"  rows="5" cols="50" required></textarea>
+    <textarea class="prompt-textarea" name="content" placeholder="describe what you want inside your element in plain text"  rows="5" cols="50" required></textarea>
     <br>
     <button type="submit" class="prompt-button">submit</button>
   </form>
