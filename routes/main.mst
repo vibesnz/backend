@@ -123,6 +123,9 @@ padding: 2.5rem !important;
 #prompt-template {
   display: none;
 }
+br + input.prompt-input{
+  margin-top: 10px;
+}
 </style>
 <script>
 function repeat(str) {
