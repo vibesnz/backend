@@ -122,6 +122,10 @@
 #prompt-template {
   display: none;
 }
+
+body {
+padding: 2.5rem !important;
+}
 </style>
 <script>
 function repeat(str) {
