@@ -7,7 +7,7 @@ import { mainTemplate } from '..';
 const template: string[] = [];
 
 export function getTemplateHandler(req: Request, res: Response) {
-  const rest = (Array([...template]).reverse().reduce((acc, snipet) => `${acc} ${snipet}`, ''))
+  const rest = ([...template]).reverse().reduce((acc, snipet) => `${acc} ${snipet}`, '')
   return res.send(Mustache.render(mainTemplate, { rest }))
 }
 
