@@ -6,6 +6,7 @@ import Mustache from 'mustache';
 import { getTemplateHandler } from './routes/template';
 
 export const mainTemplate = fs.readFileSync('./routes/main.mst').toString()
+export const mainTemplate2 = fs.readFileSync('./routes/main2.mst').toString()
 
 const port = 3000;
 const server = Express();
