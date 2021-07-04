@@ -38,6 +38,10 @@
   bottom: 0;
   right: 0;
 }
+
+body {
+padding: 2.5rem !important;
+}
 #loading {
   z-index: 9999;
   position: absolute;
